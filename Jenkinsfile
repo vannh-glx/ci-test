@@ -3,7 +3,7 @@ pipeline{
 	agent any
 
 	environment {
-		DOCKERHUB_CREDENTIALS_PSW="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"
+		DOCKERHUB_CREDENTIALS_PSW="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"
 		DOCKERHUB_CREDENTIALS_USR="vannh-glx"
 	}
 
