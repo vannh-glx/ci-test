@@ -19,7 +19,7 @@ pipeline{
 		stage('Login') {
 
 			steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u ${{ github.repository_owner }} ghcr.io --password-stdin'
+				sh 'echo "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" | docker login -u "vannh-glx" ghcr.io --password-stdin'
 			}
 		}
 
