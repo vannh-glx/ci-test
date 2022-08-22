@@ -2,13 +2,13 @@ pipeline{
 
 	agent any
 	environment {
-		CREDENTIALS=credentials('github-credential')
+		GITHUB_CREDENTIALS=credentials('github-credential')
 	}
 
 	stages {
 		stage('Build') {
 			steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login ghcr.io -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+				sh 'echo $GITHUB_CREDENTIALS_PSW | docker login ghcr.io -u $GITHUB_CREDENTIALS_USR --password-stdin'
 			    	sh 'docker build --tag ghcr.io/vannh-glx/flyte-workflow-image:v2 .'
 			}
 		}
