@@ -6,7 +6,7 @@ pipeline{
 		REPO="ghcr.io/vannh-glx"
 		IMAGE="test-workflow"
 		VERSION="v2"
-		TAG=${REPO}'/'${IMAGE}':'${VERSION}
+		TAG="${REPO}/${IMAGE}:${VERSION}"
 	}
 
 	stages {
