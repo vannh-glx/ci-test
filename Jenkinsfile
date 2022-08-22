@@ -3,7 +3,7 @@ pipeline{
 	agent any
 
 	environment {
-		DOCKERHUB_CREDENTIALS_PSW="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"
+		DOCKERHUB_CREDENTIALS_PSW="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"
 		DOCKERHUB_CREDENTIALS_USR="vannh-glx"
 	}
 
@@ -19,7 +19,7 @@ pipeline{
 		stage('Login') {
 
 			steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR ghcr.io --password-stdin'
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u ${{ github.repository_owner }} ghcr.io --password-stdin'
 			}
 		}
 
