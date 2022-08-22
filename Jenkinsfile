@@ -12,7 +12,7 @@ pipeline{
 		stage('Build') {
 
 			steps {
-				sh 'echo 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 | docker login ghcr.io --username vannh-glx --password-stdin'
+				sh 'docker login ghcr.io --username vannh-glx --password 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'
 				sh 'docker build --tag ghcr.io/vannh-glx/flyte-workflow-image:v1 .'
 			}
 		}
