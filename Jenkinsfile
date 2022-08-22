@@ -13,7 +13,7 @@ pipeline{
 		}
 		stage('Build') {
 			steps {
-				sh "docker login ghcr.io --username vannh-glx --password ${env.GITHUB_TOKEN'}"
+				sh "docker login ghcr.io --username vannh-glx --password ${env.GITHUB_TOKEN}"
 			    	sh 'docker build --tag ghcr.io/vannh-glx/flyte-workflow-image:v1 .'
 			}
 		}
