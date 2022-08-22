@@ -3,8 +3,8 @@ pipeline{
 	agent any
 
 	environment {
-		DOCKERHUB_CREDENTIALS_PSW=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
-		DOCKERHUB_CREDENTIALS_USR=vannh-glx
+		DOCKERHUB_CREDENTIALS_PSW="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"
+		DOCKERHUB_CREDENTIALS_USR="vannh-glx"
 	}
 
 	stages {
