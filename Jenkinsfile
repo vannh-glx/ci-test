@@ -7,7 +7,9 @@ pipeline{
 
 	stages {
 		stage('Prepare'){
-			sh "git clone https://${env.GITHUB_TOKEN}@github.com/vannh-glx/ci-test.git"
+			steps {
+			     sh "git clone https://${env.GITHUB_TOKEN}@github.com/vannh-glx/ci-test.git"
+			}
 		}
 		stage('Build') {
 			steps {
