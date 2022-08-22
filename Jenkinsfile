@@ -19,10 +19,11 @@ pipeline{
 		}
 	}
 
-// 	post {
-// 		always {
-// 			sh 'docker logout'
-// 		}
-// 	}
+	  post {
+	    always {
+	      echo 'Done pipeline'
+	      cleanWs deleteDirs: true
+	    }
+	  }
 
 }
