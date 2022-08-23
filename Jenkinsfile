@@ -3,10 +3,11 @@ pipeline{
 	agent any
 	environment {
 		GITHUB_CREDENTIALS=credentials('github-credential')
-		REPO="ghcr.io/vannh-glx"
+		REGISTRY="ghcr.io"
+		USERNAME="vannh-glx"
 		IMAGE="test-workflow"
 		VERSION="v2"
-		TAG="${REPO}/${IMAGE}:${VERSION}"
+		TAG="${REGISTRY}/${USERNAME}/${IMAGE}:${VERSION}"
 	}
 
 	stages {
