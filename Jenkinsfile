@@ -16,7 +16,7 @@ pipeline{
         stage('Prepare'){
 	        steps {
 	            sh "git clone https://${env.GITHUB_TOKEN}@github.com/vannh-glx/ci-test.git"
-	            dir(${REPO}){
+	            dir("${REPO}"){
 	                script {
 	                    env.TAG = sh(returnStdout: true, script: "git rev-parse --short=10 HEAD").trim()
 	                }
@@ -26,7 +26,7 @@ pipeline{
 
 		stage('Build image') {
 			steps {
-			    dir(${REPO}){
+			    dir("${REPO}"){
 			        sh 'docker build --tag ${FULL_IMAGE_NAME}:${TAG} .'
 			    }
 			}
@@ -34,7 +34,7 @@ pipeline{
 		
 		stage('Package workflow') {
 			steps {
-			    dir(${REPO}){
+			    dir("${REPO}"){
 			        sh 'pyflyte --pkgs flyte.workflows package --image ${FULL_IMAGE_NAME}:${TAG} -f'
 			    }
 			}
@@ -54,7 +54,7 @@ pipeline{
 		
 		stage('Register workflow') {
 			steps {
-			    dir(${REPO}){
+			    dir("${REPO}"){
 			        sh 'flytectl register files --config ${CONFIG_PATH} --project ${PROJECT_NAME} \
 			        --domain ${DOMAIN_NAME} --archive flyte-package.tgz --version ${TAG}';
 			    }
