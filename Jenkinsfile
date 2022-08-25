@@ -14,6 +14,7 @@ pipeline{
 	stages {
         stage('Prepare'){
 	        steps {
+	            sh "git clone https://${env.GITHUB_TOKEN}@github.com/vannh-glx/ci-test.git"
 	            dir('ci-test'){
 	                script {
 	                    env.TAG = sh(returnStdout: true, script: "git rev-parse --short=10 HEAD").trim()
@@ -21,25 +22,36 @@ pipeline{
 	            }
 	        }
 		}
-		stage('Build and package') {
+		
+		stage('Build image') {
 			steps {
 			    dir('ci-test'){
 			        sh 'docker build --tag ${FULL_IMAGE_NAME}:${TAG} .'
+			    }
+			}
+		}
+		
+		stage('Package workflow') {
+			steps {
+			    dir('ci-test'){
 			        sh 'pyflyte --pkgs flyte.workflows package --image ${FULL_IMAGE_NAME}:${TAG} -f'
 			    }
 			}
 		}
-		stage('Login'){
+		
+		stage('Login docker registry'){
 			steps {
 				sh 'echo ${GITHUB_CREDENTIALS_PSW} | docker login ghcr.io -u ${GITHUB_CREDENTIALS_USR} --password-stdin'
 			}
 		}
-		stage('Push') {
+		
+		stage('Push image') {
 			steps {
 				sh 'docker push ${FULL_IMAGE_NAME}:${TAG}';
 			}
 		}
-		stage('Register') {
+		
+		stage('Register workflow') {
 			steps {
 			    dir('ci-test'){
 			        sh 'flytectl register files --config ${CONFIG_PATH} --project ${PROJECT_NAME} \
@@ -48,11 +60,10 @@ pipeline{
 			}
 		}
 	}
-
-	  post {
+	post {
 	    always {
-	      echo 'Done pipeline'
-	      cleanWs deleteDirs: true
+	        echo 'Done pipeline'
+	        cleanWs deleteDirs: true
 	    }
-	  }
+	}
 }
