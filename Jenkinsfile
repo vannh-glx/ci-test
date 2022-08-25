@@ -1,8 +1,8 @@
 pipeline{
 	agent any
 	environment {
-        PATH="/var/lib/jenkins/.local/bin:/var/lib/jenkins/bin:$PATH"
-	    GITHUB_CREDENTIALS=credentials('github-credential')
+		PATH="/var/lib/jenkins/.local/bin:/var/lib/jenkins/bin:$PATH"
+		GITHUB_CREDENTIALS=credentials('github-credential')
 		REGISTRY="ghcr.io"
 		USERNAME="vannh-glx"
 		IMAGE_NAME="test-workflow"
