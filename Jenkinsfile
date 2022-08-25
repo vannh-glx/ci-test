@@ -1,5 +1,4 @@
 pipeline{
-
 	agent any
 	environment {
 	    PATH="/var/lib/jenkins/.local/bin:/var/lib/jenkins/bin:$PATH"
@@ -11,19 +10,16 @@ pipeline{
 		DOMAIN_NAME="development"
 		FULL_IMAGE_NAME="${REGISTRY}/${USERNAME}/${IMAGE_NAME}"
 		CONFIG_PATH="/var/lib/jenkins/.flyte/config.yaml"
-		
-		
 	}
 	stages {
-	    stage('Prepare'){
-			steps {
-		        sh "git clone https://env.GITHUB_CREDENTIALS_PSW@github.com/vannh-glx/ci-test.git"
-		        dir('ci-test'){
-		            script {
-		                env.TAG = sh(returnStdout: true, script: "git rev-parse --short=10 HEAD").trim()
-		            }
- 			    }
-			}
+        stage('Prepare'){
+	        steps {
+	            dir('ci-test'){
+	                script {
+	                    env.TAG = sh(returnStdout: true, script: "git rev-parse --short=10 HEAD").trim()
+	                }
+	            }
+	        }
 		}
 		stage('Build and package') {
 			steps {
@@ -47,7 +43,7 @@ pipeline{
 			steps {
 			    dir('ci-test'){
 			        sh 'flytectl register files --config ${CONFIG_PATH} --project ${PROJECT_NAME} \
-			        --domain ${DOMAIN_NAME} --archive flyte-package.tgz --version ${TAG}'; 
+			        --domain ${DOMAIN_NAME} --archive flyte-package.tgz --version ${TAG}';
 			    }
 			}
 		}
