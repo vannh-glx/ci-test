@@ -7,10 +7,8 @@ pipeline{
 		REGISTRY="ghcr.io"
 		USERNAME="vannh-glx"
 		IMAGE_NAME="test-workflow"
-		IMAGE_VERSION="v2"
 		PROJECT_NAME="flytetester"
 		DOMAIN_NAME="development"
-		WORKFLOW_VERSION="v1"
 		FULL_IMAGE_NAME="${REGISTRY}/${USERNAME}/${IMAGE_NAME}"
 		CONFIG_PATH="/var/lib/jenkins/.flyte/config.yaml"
 		
