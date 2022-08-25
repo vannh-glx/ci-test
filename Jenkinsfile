@@ -8,6 +8,7 @@ pipeline{
 		IMAGE_NAME="test-workflow"
 		PROJECT_NAME="flytetester"
 		DOMAIN_NAME="development"
+		REPO="ci-test"
 		FULL_IMAGE_NAME="${REGISTRY}/${USERNAME}/${IMAGE_NAME}"
 		CONFIG_PATH="/var/lib/jenkins/.flyte/config.yaml"
 	}
@@ -15,17 +16,17 @@ pipeline{
         stage('Prepare'){
 	        steps {
 	            sh "git clone https://${env.GITHUB_TOKEN}@github.com/vannh-glx/ci-test.git"
-	            dir('ci-test'){
+	            dir(${REPO}){
 	                script {
 	                    env.TAG = sh(returnStdout: true, script: "git rev-parse --short=10 HEAD").trim()
 	                }
 	            }
 	        }
 		}
-		
+
 		stage('Build image') {
 			steps {
-			    dir('ci-test'){
+			    dir(${REPO}){
 			        sh 'docker build --tag ${FULL_IMAGE_NAME}:${TAG} .'
 			    }
 			}
@@ -33,7 +34,7 @@ pipeline{
 		
 		stage('Package workflow') {
 			steps {
-			    dir('ci-test'){
+			    dir(${REPO}){
 			        sh 'pyflyte --pkgs flyte.workflows package --image ${FULL_IMAGE_NAME}:${TAG} -f'
 			    }
 			}
@@ -53,7 +54,7 @@ pipeline{
 		
 		stage('Register workflow') {
 			steps {
-			    dir('ci-test'){
+			    dir(${REPO}){
 			        sh 'flytectl register files --config ${CONFIG_PATH} --project ${PROJECT_NAME} \
 			        --domain ${DOMAIN_NAME} --archive flyte-package.tgz --version ${TAG}';
 			    }
